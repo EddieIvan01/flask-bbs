@@ -17,7 +17,7 @@ Flask + Bootstrap + MongoDB + Gunicorn + Nginx
 - [ ] 关注，点赞
 - [ ] RSS, 打算以后有时间用Golang写个API
 
-踩坑无数，也学到了不少，具体见[Blog](http://iv4n.xyz/flask-bbs)
+踩坑无数，也学到了不少，具体见[Blog](http://iv4n.xyz/flask)
 
 部署：
 
