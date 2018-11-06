@@ -82,7 +82,7 @@ Iv4n's BBS
 				<a href="/user/{{ post["author"] }}">
 				<h5>{{ post["author"] }}</h5>
 				</a>
-				<h5>Date: {{ post["date"] }}</h5></div>
+				<h5>Date: {{ convert(post["date"]) }}</h5></div>
 				</div>
 				
 			</div>
@@ -90,7 +90,7 @@ Iv4n's BBS
 				{% for comment in post["comments"] %}
 					<h5><a href="/user/{{ comment["user"] }}"><img src="/head-img/{{ comment["user"] }}" style="width:20px; height:20px"> {{ comment["user"] }}</a>: {{ comment["content"] }}
 					<small style="text-align:right">
-					{{ comment["date"] }}
+					{{ convert(comment["date"]) }}
 					</small>
 					<h5>
 				{% endfor %}
