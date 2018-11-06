@@ -26,10 +26,10 @@ class BaseUser(UserMixin):
     def __repr__(self, action):
         return "User-{} {}".format(self.uname, action)
 
-    @staticmethod
-    def query(user_id):
+    @classmethod
+    def query(cls, user_id):
         result = mongo.db.users.find_one({"_id": ObjectId(user_id)})
-        return BaseUser(result["_id"], result["uname"], result["passwd"], result["email"], result["role"])
+        return cls(result["_id"], result["uname"], result["passwd"], result["email"], result["role"])
         
     @staticmethod
     def verify_passwd(passwd, _hash):
