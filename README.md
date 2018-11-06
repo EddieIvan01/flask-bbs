@@ -4,6 +4,10 @@ Flask + Bootstrap + MongoDB + Gunicorn + Nginx
 
 部署于套路云[地址](http://39.105.187.104)
 
+![](https://github.com/EddieIvan01/Flask_BBS/blob/master/demo_img/1.png)
+
+![](https://github.com/EddieIvan01/Flask_BBS/blob/master/demo_img/2.png)
+
 - [x] 发帖
 - [x] 评论
 - [x] 数据库分页
