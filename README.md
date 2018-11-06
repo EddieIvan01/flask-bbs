@@ -14,3 +14,12 @@ Flask + Bootstrap + MongoDB + Gunicorn + Nginx
 - [ ] RSS, 打算以后有时间用Golang写个API
 
 踩坑无数，也学到了不少，具体见[Blog](http://iv4n.xyz/flask-bbs)
+
+部署：
+
+```
+安装MongoDB并配置
+安装Nginx并配置
+安装Gunicorn
+运行 bash run.sh
+```
