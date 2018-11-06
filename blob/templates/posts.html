@@ -1,0 +1,99 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block metas %}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="pragma" content="no-cache" />
+{% endblock %}
+
+{% block title %}
+Iv4n's BBS
+{% endblock %}
+
+{% block navbar %}
+    <link rel="icon" href="/static/ico/code3.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/static/ico/code3.ico" type="image/x-icon" />
+    <div class="container">
+        <div class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    <img src="/static/ico/code2.ico" style="width: 30px; height: 30px">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+            {% if current_user.is_authenticated %}
+                <li>
+                    <a href="/user/{{ current_user.uname }}">
+                        <img src="/head-img/{{ current_user.uname }}" style="width: 35px; height: 35px">
+                    </a>
+                </li> 
+                <li>
+                    <a href="/post">
+                        <span class="glyphicon glyphicon-pencil"></span> Post
+                    </a>
+                </li>
+                <li>
+                    <a href="/auth/logout">
+                        <span class="glyphicon glyphicon-log-out"></span> Logout
+                    </a>
+                </li>
+            {% else %}
+                <li><a href="/auth/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                <li><a href="/auth/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            {% endif %}
+            </ul>
+        </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="container col-lg-offset-3 col-lg-6 ">
+    <div class="post-header">
+        <h1 style="text-align: center;">{{ post["title"] }}</h1>
+        <h3 style="text-align: center;">{{ post["author"] }}</h3>
+        <h5 style="text-align: right;">{{ convert(post["date"]) }}</h5>
+    </div>
+    {% if not current_user.is_anonymous %}
+    {% if current_user.uname==post["author"] or current_user.is_admin() %}
+    <div style="text-align: right;">
+        <a href="?act=delete"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+        <br />
+    </div>
+    {% endif %}
+    {% endif %}
+    <div style="text-align: right;">
+        <a href="#comment"><span class="glyphicon glyphicon-comment"></span> Comment</a>    
+    </div>
+    <br />
+    <div class="post">
+        {{ post["content"] | safe }}
+    </div>
+    <div id="comment" class="post-footer" style="text-align: left;">
+        {% for comment in post["comments"] %}
+            <HR style="border:1 dashed #987cb9" width="80%" color=#987cb9 SIZE=1>
+            <h4><img src="/head-img/{{ comment["user"] }}" style="width:20px; height:20px"> {{ comment["user"] }}: {{ comment["content"] }}
+            <small style="text-align:right">
+            {{ convert(comment["date"]) }}
+            </small>
+            {% if not current_user.is_anonymous %}
+            {% if current_user.uname==comment["user"] or current_user.is_admin() %}
+                <div style="text-align: right;">
+                    <a href="?act=delete-comment&a={{ comment['user'] }}&t={{ comment['date'] }}"><span class="glyphicon glyphicon-trash" ></span> Delete</a>
+                </div>
+            {% endif %}
+            {% endif %}
+            <h4>
+        {% endfor %}
+        <HR style="border:1 dashed #987cb9" width="80%" color=#987cb9 SIZE=1>
+        {{ wtf.quick_form(form) }}
+        <br />
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-success">
+            {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

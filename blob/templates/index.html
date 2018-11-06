@@ -1,0 +1,109 @@
+{% extends "bootstrap/base.html" %}
+
+{% block metas %}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="pragma" content="no-cache" />
+{% endblock %}
+
+{% block title %}
+Iv4n's BBS
+{% endblock %}
+
+{% block navbar %}
+<link rel="icon" href="/static/ico/code3.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="/static/ico/code3.ico" type="image/x-icon" />
+<div class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/"><img src="/static/ico/code2.ico" style="width: 30px; height: 30px"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-left">
+				<li>
+					<a href="/about">About</a>
+				</li>
+			</ul>
+            <ul class="nav navbar-nav navbar-right">
+				{% if current_user.is_authenticated %}
+					<li>
+						<a href="/user/{{ current_user.uname }}">
+							<img src="/head-img/{{ current_user.uname }}" style="width: 35px; height: 35px">
+						</a>
+					</li>
+					<li>
+						<a href="/post">
+							<span class="glyphicon glyphicon-pencil"></span> Post
+						</a>
+					</li>
+					<li>
+						<a href="/auth/logout">
+							<span class="glyphicon glyphicon-log-out"></span> Logout
+						</a>
+					</li>
+				{% else %}
+					<li><a href="/auth/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+					<li><a href="/auth/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+				{% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+<div class="row">
+	<div class="col-lg-2">
+		<h3>BBS</h3>
+		<img class="img-rounded" src="/static/img/ac.jpg" style="width:50px; height:50px;" />
+	</div>
+	{% for message in get_flashed_messages() %}
+	<div class="alert alert-success col-lg-offset-2 col-lg-2">
+	{{ message }}
+	</div>
+{% endfor %}
+</div>
+<br />
+
+<div class="page-content">
+{% for post in posts %}
+<div class="container">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+			
+				
+			<div class="row">
+				<div class="col-lg-1"><br />
+				<!--相信我，这个API是不可能读到本地文件的-->
+				<a href="/user/{{ post["author"] }}"><img src="/head-img/{{ post["author"] }}" style="width:75px; height:75px">
+				</div></a>
+				<div class="col-lg-offset-1">
+				<a href="/posts/t/{{ post["_id"] }}"><h2>{{ post["title"] }}</h2></a>
+				<a href="/user/{{ post["author"] }}">
+				<h5>{{ post["author"] }}</h5>
+				</a>
+				<h5>Date: {{ post["date"] }}</h5></div>
+				</div>
+				
+			</div>
+			<div class="panel-footer">
+				{% for comment in post["comments"] %}
+					<h5><a href="/user/{{ comment["user"] }}"><img src="/head-img/{{ comment["user"] }}" style="width:20px; height:20px"> {{ comment["user"] }}</a>: {{ comment["content"] }}
+					<small style="text-align:right">
+					{{ comment["date"] }}
+					</small>
+					<h5>
+				{% endfor %}
+			</div>
+		</div>
+</div>
+{% endfor %}
+</div>
+<div style="text-align:center">
+<ul class="pagination">
+	<li class="previous {% if page==1 %}disabled{% endif %}"><a href="/?page={% if page!=1 %}{{ page-1 }}{% else %}1{% endif %}">&laquo;</a></li>
+	<li class="next {% if page==count %}disabled{% endif %}"><a href="/?page={% if page<count %}{{ page+1 }}{% else %}{{count}}{% endif %}">&raquo;</a></li>
+</ul>
+</div>
+</div>
+{% endblock %}

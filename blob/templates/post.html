@@ -1,0 +1,112 @@
+{% extends "bootstrap/base.html" %}
+
+{% block metas %}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="pragma" content="no-cache" />
+{% endblock %}
+
+{% block title %}
+Iv4n's BBS
+{% endblock %}
+
+{% block styles %}
+<link href="static/editormd/css/editormd.min.css" rel="stylesheet" />
+<script src="static/editormd/examples/js/jquery.min.js"></script>
+<script src="static/editormd/editormd.min.js"></script>
+<link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet">
+{% endblock %}
+
+{% block navbar %}
+    <link rel="icon" href="/static/ico/code3.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/static/ico/code3.ico" type="image/x-icon" />
+    <div class="container">
+        <div class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    <img src="/static/ico/code2.ico" style="width: 30px; height: 30px">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/user/{{ current_user.uname }}">
+                            <img src="/head-img/{{ current_user.uname }}" style="width: 35px; height: 35px">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/auth/logout">
+                            <span class="glyphicon glyphicon-log-out"></span> Logout
+                        </a>
+                    </li>
+                <ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content%}
+
+<h1 style="text-align: center;">Post</h1>
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-success col-lg-offset-2 col-lg-8">
+    {{ message }}
+    </div>
+{% endfor %}
+<div class="panel panel-warning col-lg-offset-4 col-lg-4">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" 
+            href="#collapseOne">
+            Hint
+            </a>
+        </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse">
+        <div class="panel-body">
+            本论坛写文章需要Markdown语法，点工具栏的小问号可简单了解<br />文章标题按第一行h1标签解析<br />写Markdown<strong>需注意</strong>，每一个符号后的空格和每一句后的空行<br />
+            E.g. 可尝试输入下面一段文字<br /><br />
+            # This is title<br /><br />
+            > this is reference<br /><br />
+            How are **U**<br /><br />
+            ```python<br />
+            print("Hi, Iv4n")<br />
+            ```<br /><br />
+            + This is no.1<br />
+            + This is no.2<br /><br />
+            This is [link](http://nemesisly.xyz)<br /><br />
+            This is pic:<br /><br />
+            ![](https://cn.bing.com/th?id=A7b355fcce47c1def8d8d6adf11d97741&w=110&h=110&c=7&rs=1&qlt=95&pcl=f9f9f9&cdv=1&pid=16.1)
+        </div>
+    </div>
+</div>
+<form method="post" action="">
+    <div id="test-editormd" > 
+        <textarea id="test-editormd-markdown-doc" name="test-editormd-markdown-doc" style="display:none;"></textarea> 
+    </div>
+    <div style="text-align:center">
+        <input id="submit" name="submit" type="submit" value="Submit" style="width: 150px; height: 40px; border-width: 0px;border-radius: 3px; background: #1E90FF; cursor: pointer;outline: none;font-family: Microsoft YaHei;color: white; font-size: 17px;">
+    </div>
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
+<script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
+<script type="text/javascript">
+    var testEditor;
+    $(function() {
+        testEditor = editormd("test-editormd", {
+            width: "1000px",
+            height: 560,
+            syncScrolling: "single",
+            path: "static/editormd/lib/",
+            imageUpload: false,
+            emoji: true,
+            saveHTMLToTextarea: true,
+        });
+    });
+
+    testEditor.getMarkdown(); 
+</script>
+{% endblock %}

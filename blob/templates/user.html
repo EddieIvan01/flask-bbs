@@ -1,0 +1,93 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block metas %}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="pragma" content="no-cache" />
+{% endblock %}
+
+{% block title %}
+Iv4n's BBS
+{% endblock %}
+
+{% block navbar %}
+    <link rel="icon" href="/static/ico/code3.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/static/ico/code3.ico" type="image/x-icon" />
+    <div class="container">
+        <div class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    <img src="/static/ico/code2.ico" style="width: 30px; height: 30px">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/post">
+                        <span class="glyphicon glyphicon-pencil"></span> Post
+                    </a>
+                </li>
+                <li>
+                    <a href="/auth/logout">
+                        <span class="glyphicon glyphicon-log-out"></span> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-success">
+            {{ message }}
+            </div>
+        {% endfor %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <p>Info</p>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <img src="/head-img/{{ user_obj["uname"] }}" style="width: 200px; height: 200px" class="img-circle col-lg-offset-1">
+                </div>
+                
+                <h3 class="col-lg-offset-1"><span class="glyphicon glyphicon-user"></span> Username: {{ user_obj["uname"] }}</h3><br />             
+                <h4 class="col-lg-offset-1"><span class="glyphicon glyphicon-envelope"></span> Email: {{ info["email"] }}</h4><br />
+                <h4 class="col-lg-offset-1"><span class="glyphicon glyphicon-pushpin"></span> Blog: {{ info["blog"] }}</h4><br />
+                <h4 class="col-lg-offset-1"><img src="/static/img/github.jpg" style="width: 20px; height: 20px"> Github: {{ info["github"] }}</h4><br />
+                <h4 class="col-lg-offset-1"><span class="glyphicon glyphicon-earphone"></span> Phone: {{ info["phone"] }}</h4><br />
+                <h4 class="col-lg-offset-1"><img src="/static/img/qq.jpg" style="width: 20px; height: 30px"> QQ: {{ info["qq"] }}</h4>
+            </div>
+            <HR style="border:1 dashed #987cb9" width="80%" color=#987cb9 SIZE=3>
+            <div class="row">
+            
+            {% if current_user.uname==user_obj["uname"] or current_user.is_admin() %}
+                <h4 class="col-lg-offset-1"><strong>Update your personal info</strong></h4>
+                <div class="container col-lg-offset-1">
+                {{ wtf.quick_form(form) }}
+                </div>
+            {% endif %}
+                <br />
+            </div>
+        </div>
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" 
+                    href="#collapseOne">
+                    Could I hack here
+                    </a>
+                </h4>
+            </div>
+        <div id="collapseOne" class="panel-collapse collapse">
+            <div class="panel-body">
+                想什么呢，我把图片字节流编码直接写入数据库了
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

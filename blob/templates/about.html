@@ -1,0 +1,61 @@
+{% extends "bootstrap/base.html" %}
+
+{% block metas %}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="pragma" content="no-cache" />
+{% endblock %}
+
+{% block title %}
+Iv4n's BBS
+{% endblock %}
+
+{% block navbar %}
+<link rel="icon" href="/static/ico/code3.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="/static/ico/code3.ico" type="image/x-icon" />
+<div class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/"><img src="/static/ico/code2.ico" style="width: 30px; height: 30px"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_authenticated %}
+                    <li>
+                        <a href="/user/{{ current_user.uname }}">
+                            <img src="/head-img/{{ current_user.uname }}" style="width: 35px; height: 35px">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/post">
+                            <span class="glyphicon glyphicon-pencil"></span> Post
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/auth/logout">
+                            <span class="glyphicon glyphicon-log-out"></span> Logout
+                        </a>
+                    </li>
+                {% else %}
+                    <li><a href="/auth/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                    <li><a href="/auth/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="jumbotron">
+            <h2>About this BBS</h2><br />
+            <p>
+            花了两周左右时间，从读Flask文档、Bootstrap文档开始，到肝出这个简易论坛，再到Nginx+Gunicorn+MongoDB部署到良心云<br /><br />
+            论坛主题还没想好，不过大概就是任何C/S主题，语言特性，算法架构，安全运维，开发调优等等等等，或者耳机键盘二手交易也不错，只要不是黑产 or 反动 or 任何违背主流价值观的内容。不过很大可能这个论坛就是放着吃灰<br /><br />
+            未来会慢慢完善论坛功能，比如RSS、贴子点赞等功能。不过应该是很遥远的事了，因为懒+忙(冬困想睡觉+屯着一堆书没看+最近比赛太jb多了)<br /><br />
+            因为是做安全的，所以写代码时一直在想安全问题，自我感觉SQLi, XSS, CSRF, 目录穿越, 文件上传等等漏洞都应该考虑到了，但放到公网上还是有一丝丝担心，怕自己哪个地方写的时候脑子抽了导致服务器沦为肉鸡<br /><br />
+            2018/11/3
+            </p>
+        </div>
+    </div>
+{% endblock %}

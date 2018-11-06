@@ -1,0 +1,61 @@
+
+<!--DOCTYPE HTML-->
+<HTML><HEAD><TITLE>网站后台管理</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=utf-8">
+<LINK href="static/admin.css" rel=stylesheet>
+<style type="text/css">
+<!--
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+-->
+</style></HEAD>
+<BODY id="Login_body">
+<h2>如果你是在扫后台的话，看到这个页面，是不是很开心</h2>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" height="100%" align="center" valign="middle"><table width="589" border="0" align="center" cellpadding="0" cellspacing="0">
+      <form id="UsersReg" name="UsersLogin" onSubmit="return Check_Login(this);" action="#" method="post">
+        <tr>
+          <td background="static/img/admin1.gif" height="116"></td>
+        </tr>
+        <tr>
+          <td background="static/img/admin2.gif" height="139" valign="top"><table align="center" width="430" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td height="13" colspan="2"></td>
+              <td width="120" rowspan="5" align="right"><input style="WIDTH: 100px; HEIGHT: 100px" type="image" src="static/img/admin.jpg" name="Submit"><input type="hidden" name="Action" value="L_Add"></td>
+            </tr>
+            <tr>
+              <td width="130" height="33" class="user_main_text" align="right">用 户 名</td>
+              <td width="180"><input class="UserName" type="text" id="UserName" maxlength="22" name="UserName"></td>
+            </tr>
+            <tr>
+              <td height="33" class="user_main_text" align="right">登录密码</td>
+              <td><input class="UserPassword" type="password" id="UserPwd" maxlength="22" name="UserPwd"></td>
+            </tr>
+            <tr>
+              <td height="33" class="user_main_text" align="right">验 证 码</td>
+              <td class="user_main_text"><input class="UserCode" id="UserCode" maxlength="4" name="UserCode">
+                &nbsp;&nbsp;<font color="#FF0000"><strong>1703</strong></font>
+                <input maxlength=20 name="UserCode2" size=12 type=hidden value="1703"></td>
+            </tr>
+            <tr>
+              <td height="24" colspan="2"></td>
+            </tr>
+          </table></td>
+        </tr>
+        <tr>
+          <td background="static/img/admin3.gif" height="117" align="center" valign="top">
+		    <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0">
+		       <tr><td></td></tr>
+		    </table>
+		  </td>
+        </tr>
+      </form>
+    </table></td>
+  </tr>
+</table>
+</BODY></HTML>

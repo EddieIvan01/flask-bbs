@@ -1,0 +1,29 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block metas %}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="pragma" content="no-cache" />
+{% endblock %}
+
+{% block title %}
+    Iv4n's BBS
+{% endblock%}
+
+{% block content %}
+    <link rel="icon" href="/static/ico/code3.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/static/ico/code3.ico" type="image/x-icon" />
+    <div class="container">
+        <h3>Register</h3>
+        {{ wtf.quick_form(form) }}
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-success">
+            {{ message }}
+            </div>
+        {% endfor %}
+        <div class="container col-lg-offset-1">
+           <p>不要问我为什么拿这个当验证码</p>
+           <img src="/static/img/register.jpg" style="width=100px; height=100px">
+        </div>
+    </div>
+{% endblock %}

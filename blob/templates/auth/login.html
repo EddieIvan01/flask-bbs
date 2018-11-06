@@ -1,0 +1,42 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block metas %}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="pragma" content="no-cache" />
+{% endblock %}
+
+{% block title %}
+    Iv4n's BBS
+{% endblock%}
+
+{% block content %}
+    <link rel="icon" href="/static/ico/code3.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/static/ico/code3.ico" type="image/x-icon" />
+    <div class="container">
+        <h3>Login</h3>
+        {{ wtf.quick_form(form) }}
+        <br />
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-success">
+            {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    <br />
+    <div class="panel panel-warning col-lg-offset-2 col-lg-2">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" 
+                href="#collapseOne">
+                Could I sqli here?
+                </a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse">
+            <div class="panel-body">
+                You can try
+            </div>
+        </div>
+    </div>
+{% endblock %}
