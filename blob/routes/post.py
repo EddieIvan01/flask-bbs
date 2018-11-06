@@ -81,28 +81,28 @@ def posts_handler(id):
     except:
         return redirect("/posts/t/"+str(id))
     if request.args.get("act")=="delete-comment" and request.args.get("a") and request.args.get("t"):
-        #try:
-        a = request.args.get("a")
-        t = request.args.get("t")
-        if current_user.is_anonymous:
-            return "Anonymous user!!", 401
-        if current_user!=a and not current_user.is_admin():
-            return "No no no, dude, learn to accept others' opinions", 401
-        id, _ = flask_real_escape(id)
-        a, _ = flask_real_escape(a)
-        t, _ = flask_real_escape(t)
-        comment_list = mongo.db.posts.find_one({"_id": ObjectId(id)})["comments"]
-        target = None
-        for i in comment_list:
-            if i["user"]==a and str(i["date"])==t:
-                target = i
-                break
-        if target:
-            mongo.db.posts.update({"_id": ObjectId(id)}, {"$pull": {"comments": {"user": a, "date": int(t)}}})
-            return redirect("/posts/t/"+str(id))
-        else:
-            raise Exception
-        #except:
-            #return "What are you request to delete??", 400
+        try:
+            a = request.args.get("a")
+            t = request.args.get("t")
+            if current_user.is_anonymous:
+                return "Anonymous user!!", 401
+            if current_user.uname!=a and not current_user.is_admin():
+                return "No no no, dude, learn to accept others' opinions", 401
+            id, _ = flask_real_escape(id)
+            a, _ = flask_real_escape(a)
+            t, _ = flask_real_escape(t)
+            comment_list = mongo.db.posts.find_one({"_id": ObjectId(id)})["comments"]
+            target = None
+            for i in comment_list:
+                if i["user"]==a and str(i["date"])==t:
+                    target = i
+                    break
+            if target:
+                mongo.db.posts.update({"_id": ObjectId(id)}, {"$pull": {"comments": {"user": a, "date": int(t)}}})
+                return redirect("/posts/t/"+str(id))
+            else:
+                raise Exception
+        except:
+            return "What are you request to delete??", 400
     post = get_posts_api(_id=ObjectId(id))[0]
     return render_template("posts.html", post=post, form=form, convert=sec2time)
